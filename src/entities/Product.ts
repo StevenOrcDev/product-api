@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 
 @Entity()
 export class Product extends BaseEntity {
@@ -8,13 +8,17 @@ export class Product extends BaseEntity {
   @Column()
   name: string;
 
-  @Column("decimal")
+  @Column('decimal')
   price: number;
 
-  constructor(name: string, price: number, id: number) {
+  @Column('decimal')
+  quantity: number;
+
+  constructor(name: string, price: number, id: number, quantity: number) {
     super();
     this.name = name;
     this.price = price;
     this.id = id;
+    this.quantity = quantity;
   }
 }

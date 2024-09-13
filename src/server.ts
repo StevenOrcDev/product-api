@@ -1,10 +1,10 @@
-import express from "express";
-import dotenv from "dotenv";
-import helmet from "helmet";
-import cors from "cors";
-import { errorHandler } from "./middlewares";
-import { logger } from "./utils/logger";
-import { initializeDB } from "./config";
+import express from 'express';
+import dotenv from 'dotenv';
+import helmet from 'helmet';
+import cors from 'cors';
+import { errorHandler } from './middlewares';
+import { logger } from './utils/logger';
+import { initializeDB } from './config';
 
 // Charger les variables d'environnement
 dotenv.config();
