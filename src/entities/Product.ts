@@ -1,24 +1,38 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import { ProductModel } from '../models';
 
 @Entity()
 export class Product extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 255,
+    nullable: false,
+    name: 'name',
+  })
   name: string;
 
-  @Column('decimal')
-  price: number;
+  @Column({
+    type: 'text',
+    nullable: true,
+    name: 'description',
+  })
+  description?: string;
 
-  @Column('decimal')
-  quantity: number;
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    nullable: true,
+    name: 'price',
+  })
+  price?: number;
 
-  constructor(name: string, price: number, id: number, quantity: number) {
-    super();
-    this.name = name;
-    this.price = price;
-    this.id = id;
-    this.quantity = quantity;
-  }
+  @Column({
+    type: 'int',
+    nullable: true,
+    name: 'quantity',
+  })
+  quantity?: number;
 }
