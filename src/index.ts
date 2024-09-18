@@ -5,8 +5,8 @@ import cors from 'cors';
 import { errorHandler } from './middlewares';
 import { logger } from './utils/logger';
 import { initializeDB } from './config';
+import { productRoutes } from './routes';
 
-// Charger les variables d'environnement
 dotenv.config();
 
 initializeDB();
@@ -14,15 +14,17 @@ initializeDB();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middlewares globaux
-app.use(helmet()); // Sécuriser les headers HTTP
-app.use(cors()); // Autoriser les requêtes cross-origin
-app.use(express.json()); // Parser le corps des requêtes JSON
+// Middlewares
+app.use(helmet()); // secure HTTP headers
+app.use(cors()); // allow cross-origin requests
+app.use(express.json());
 
-// Middleware global de gestion des erreurs
+// initialize routes with versions
+app.use('/api/v1/products', productRoutes);
+
+// Global middleware handling errors
 app.use(errorHandler);
 
-// Démarrage du serveur
 app.listen(port, () => {
   logger.info(`Server is running on port ${port}`);
 });
