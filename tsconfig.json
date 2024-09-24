@@ -12,6 +12,7 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "strictPropertyInitialization": false,
+    "noImplicitAny": false,
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
