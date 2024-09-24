@@ -7,6 +7,7 @@ const config: Config = {
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.[jt]s$',
   testEnvironment: 'node',
   moduleFileExtensions: ['ts', 'js', 'json'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   coverageThreshold: {
     global: {
       branches: 100,

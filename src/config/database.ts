@@ -2,9 +2,11 @@ import { DataSource } from 'typeorm';
 import { Product } from '../entities/Product';
 import dotenv from 'dotenv';
 
-dotenv.config(); // Charger les variables d'environnement
+if (process.env.NODE_ENV !== 'test') {
+  dotenv.config();
+}
 
-export const AppDataSource = new DataSource({
+export const AppDataSource: DataSource = new DataSource({
   type: 'postgres',
   host: process.env.DB_HOST || 'localhost',
   port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432,
@@ -12,16 +14,6 @@ export const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   entities: [Product], // Your entities here
-  synchronize: true, // Set to false in production
+  synchronize: true, // Crée automatiquement les tables si elles n'existent pas
   logging: false,
 });
-
-// Initialiser la connexion
-export const initializeDB = async () => {
-  try {
-    await AppDataSource.initialize();
-  } catch (error) {
-    console.error('Error connecting to the database', error);
-    process.exit(1); // Arrête l'application en cas d'échec de la connexion
-  }
-};
