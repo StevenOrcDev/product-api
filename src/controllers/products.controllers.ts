@@ -13,7 +13,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
 };
 
 export const getProductById = async (req: Request, res: Response) => {
-  const { id } = req?.params;
+  const { id } = req.params;
   try {
     const product = await Product.findOneBy({ id: parseInt(id) });
     if (!product) {
