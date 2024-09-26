@@ -14,9 +14,13 @@ initializeDB();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middlewares
-app.use(helmet()); // secure HTTP headers
-app.use(cors()); // allow cross-origin requests
+// Helmet sécurise les en-têtes HTTP en configurant de manière appropriée des en-têtes HTTP
+// par exemple, en configurant X-Content-Type-Options pour empêcher les navigateurs de faire du MIME sniffing
+// ou en configurant X-Frame-Options pour empêcher le clickjacking
+// ou en configurant X-XSS-Protection pour activer le filtre de script intersite (XSS) intégré des navigateurs
+app.use(helmet());
+// Cors permet de sécuriser les requêtes HTTP en définissant les domaines autorisés à accéder à l'API
+app.use(cors());
 app.use(express.json());
 
 // initialize routes with versions
