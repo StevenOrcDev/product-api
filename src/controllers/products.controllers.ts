@@ -1,5 +1,5 @@
 // controllers/product.controller.ts
-import e, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { Product } from '../entities/Product';
 import { ProductModel } from '../models';
 
