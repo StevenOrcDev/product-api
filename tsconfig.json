@@ -13,6 +13,7 @@
     "sourceMap": true,
     "strictPropertyInitialization": false,
     "noImplicitAny": false,
+    "strictNullChecks": false,
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {

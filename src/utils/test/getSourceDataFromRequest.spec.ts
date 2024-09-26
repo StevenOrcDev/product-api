@@ -1,6 +1,6 @@
-import { SourceRequestDtoType } from '../entities';
+import { SourceRequestDtoType } from '../../entities';
 import { Request } from 'express';
-import { getSourceDataFromRequest } from './getSourceDataFromRequest';
+import { getSourceDataFromRequest } from '../getSourceDataFromRequest';
 
 describe('getSourceDataFromRequest', () => {
   const mockRequest: Partial<Request> = {
