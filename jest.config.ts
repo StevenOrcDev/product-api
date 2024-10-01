@@ -20,6 +20,7 @@ const config: Config = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
+  modulePathIgnorePatterns: ['<rootDir>/dist/'],
 };
 
 export default config;
