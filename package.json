@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "node dist/src/index.js",
     "dev": "ts-node-dev src/index.ts",
     "prepare": "husky install",
-    "lint": "eslint src",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint \"src/**/*.{js,mjs,cjs,ts}\" \"*.{js,mjs,cjs,ts}\""
   },
   "keywords": [],
   "author": "",

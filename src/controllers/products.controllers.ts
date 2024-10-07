@@ -2,12 +2,14 @@
 import { Request, Response } from 'express';
 import { Product } from '../entities/Product';
 import { ProductModel } from '../models';
+import { logger } from '../utils';
 
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
     const products = await Product.find();
     res.status(200).json(products);
   } catch (error) {
+    logger.info(error['message']);
     res.status(500).json({ message: 'Error retrieving products' });
   }
 };
@@ -21,6 +23,7 @@ export const getProductById = async (req: Request, res: Response) => {
     }
     return res.status(200).json(product);
   } catch (error) {
+    logger.info(error['message']);
     res.status(500).json({ message: 'Error retrieving product' });
   }
 };
@@ -33,6 +36,7 @@ export const createProduct = async (req: Request, res: Response) => {
     await newProduct.save();
     return res.status(201).json(newProduct);
   } catch (error) {
+    logger.info(error['message']);
     res.status(500).json({ message: 'Error creating product' });
   }
 };
@@ -50,6 +54,7 @@ export const deleteProductById = async (req: Request, res: Response) => {
       product,
     });
   } catch (error) {
+    logger.info(error['message']);
     res.status(500).json({ message: 'Error deleting product' });
   }
 };
@@ -66,6 +71,7 @@ export const updateProductById = async (req: Request, res: Response) => {
     await product.save();
     return res.status(200).json(product);
   } catch (error) {
+    logger.info(error['message']);
     res.status(500).json({ message: 'Error updating product' });
   }
 };

@@ -1,7 +1,4 @@
-import { DataSource } from 'typeorm';
-
 describe('AppDataSource', () => {
-  let AppDataSource: DataSource;
   const OLD_ENV = process.env;
 
   beforeEach(() => {
@@ -13,8 +10,8 @@ describe('AppDataSource', () => {
     process.env = OLD_ENV;
   });
 
-  it('should configure the DataSource with environment variables', () => {
-    AppDataSource = require('../database').AppDataSource;
+  it('should configure the DataSource with environment variables', async () => {
+    const { AppDataSource } = await import('../database');
     const dataSourceOptions = AppDataSource.options;
 
     expect(dataSourceOptions.type).toEqual('postgres');
@@ -28,21 +25,21 @@ describe('AppDataSource', () => {
     expect(dataSourceOptions['port']).toBe(5432);
   });
 
-  it('should use the default host when DB_HOST is not defined', () => {
+  it('should use the default host when DB_HOST is not defined', async () => {
     delete process.env.DB_HOST;
     delete process.env.DB_PORT;
 
-    AppDataSource = require('../database').AppDataSource;
+    const { AppDataSource } = await import('../database');
     const dataSourceOptions = AppDataSource.options;
 
     expect(dataSourceOptions['host']).toBe('localhost');
     expect(dataSourceOptions['port']).toBe(5432);
   });
 
-  it('should use the default host when NODE_ENV is not test', () => {
+  it('should use the default host when NODE_ENV is not test', async () => {
     process.env.NODE_ENV = 'development';
 
-    AppDataSource = require('../database').AppDataSource;
+    const { AppDataSource } = await import('../database');
     const dataSourceOptions = AppDataSource.options;
 
     expect(dataSourceOptions['host']).toBe('localhost');

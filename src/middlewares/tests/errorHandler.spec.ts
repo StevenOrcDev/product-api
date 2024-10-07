@@ -4,7 +4,6 @@ import { errorHandler } from '../errorHandler';
 describe('errorHandler', () => {
   let mockRequest: Partial<Request>;
   let mockResponse: Partial<Response>;
-  let mockNext: jest.Mock;
   let mockStatus: jest.Mock;
   let mockSend: jest.Mock;
   let mockConsoleError: jest.SpyInstance;
@@ -16,7 +15,6 @@ describe('errorHandler', () => {
     mockResponse = {
       status: mockStatus,
     };
-    mockNext = jest.fn();
 
     mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
   });

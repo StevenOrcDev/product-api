@@ -1,5 +1,5 @@
-import { AppDataSource } from '../database'; // Ajustez le chemin
-import { initializeDB } from '../initializeDB'; // Ajustez le chemin
+import { AppDataSource } from '../database';
+import { initializeDB } from '../initializeDB';
 
 describe('initializeDB', () => {
   let exitSpy: jest.SpyInstance;
@@ -34,9 +34,10 @@ describe('initializeDB', () => {
 
     try {
       await initializeDB();
-    } catch (e) {}
-
-    expect(AppDataSource.initialize).toHaveBeenCalledTimes(1);
-    expect(exitSpy).toHaveBeenCalledWith(1);
+    } catch (error) {
+      expect(error).toBeDefined();
+      expect(AppDataSource.initialize).toHaveBeenCalledTimes(1);
+      expect(exitSpy).toHaveBeenCalledWith(1);
+    }
   });
 });
