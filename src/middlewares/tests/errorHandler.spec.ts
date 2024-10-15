@@ -1,9 +1,10 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { errorHandler } from '../errorHandler';
 
 describe('errorHandler', () => {
   let mockRequest: Partial<Request>;
   let mockResponse: Partial<Response>;
+  let mockNext: Partial<NextFunction>;
   let mockStatus: jest.Mock;
   let mockSend: jest.Mock;
   let mockConsoleError: jest.SpyInstance;
@@ -15,6 +16,7 @@ describe('errorHandler', () => {
     mockResponse = {
       status: mockStatus,
     };
+    mockNext = jest.fn();
 
     mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
   });
@@ -27,7 +29,7 @@ describe('errorHandler', () => {
     process.env.NODE_ENV = 'production';
 
     const error = new Error('Test error');
-    errorHandler(error, mockRequest as Request, mockResponse as Response);
+    errorHandler(error, mockRequest as Request, mockResponse as Response, mockNext as NextFunction);
 
     expect(mockStatus).toHaveBeenCalledWith(500);
     expect(mockSend).toHaveBeenCalledWith({
@@ -41,7 +43,7 @@ describe('errorHandler', () => {
     process.env.NODE_ENV = 'development';
 
     const error = new Error('Test error');
-    errorHandler(error, mockRequest as Request, mockResponse as Response);
+    errorHandler(error, mockRequest as Request, mockResponse as Response, mockNext as NextFunction);
 
     expect(mockStatus).toHaveBeenCalledWith(500);
     expect(mockSend).toHaveBeenCalledWith({

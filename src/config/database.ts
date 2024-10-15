@@ -6,14 +6,21 @@ if (process.env.NODE_ENV !== 'test') {
   dotenv.config();
 }
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 export const AppDataSource: DataSource = new DataSource({
   type: 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  entities: [Product], // Your entities here
-  synchronize: true, // Crée automatiquement les tables si elles n'existent pas
+  // En production, on utilise DATABASE_URL, sinon on garde la config locale
+  url: isProduction ? process.env.DATABASE_URL : undefined,
+  host: !isProduction ? process.env.DB_HOST || 'localhost' : undefined,
+  port: !isProduction ? (process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432) : undefined,
+  username: !isProduction ? process.env.DB_USER : undefined,
+  password: !isProduction ? process.env.DB_PASSWORD : undefined,
+  database: !isProduction ? process.env.DB_NAME : undefined,
+  entities: [Product], // Tes entités ici
+  synchronize: !isProduction, // En production, désactive `synchronize` pour éviter des modifications inattendues
   logging: false,
+  extra: {
+    ssl: isProduction ? { rejectUnauthorized: false } : false,
+  },
 });

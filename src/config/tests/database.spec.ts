@@ -45,4 +45,19 @@ describe('AppDataSource', () => {
     expect(dataSourceOptions['host']).toBe('localhost');
     expect(dataSourceOptions['port']).toBe(5432);
   });
+
+  it('should use set correct values when NODE_IS production', async () => {
+    process.env.NODE_ENV = 'production';
+    process.env.DATABASE_URL = 'url';
+
+    const { AppDataSource } = await import('../database');
+    const dataSourceOptions = AppDataSource.options;
+
+    expect(dataSourceOptions['host']).toBe(undefined);
+    expect(dataSourceOptions['port']).toBe(undefined);
+    expect(dataSourceOptions['username']).toBe(undefined);
+    expect(dataSourceOptions['password']).toBe(undefined);
+    expect(dataSourceOptions['database']).toBe(undefined);
+    expect(dataSourceOptions['url']).toBe('url');
+  });
 });

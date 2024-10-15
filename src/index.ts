@@ -26,7 +26,7 @@ app.use(express.json());
 // initialize routes with versions
 app.use('/api/v1/products', productRoutes);
 
-// Global middleware handling errors
+// Error handler middleware
 app.use(errorHandler);
 
 app.listen(port, () => {
