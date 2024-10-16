@@ -18,7 +18,7 @@ export const AppDataSource: DataSource = new DataSource({
   password: !isProduction ? process.env.DB_PASSWORD : undefined,
   database: !isProduction ? process.env.DB_NAME : undefined,
   entities: [Product], // Tes entités ici
-  synchronize: !isProduction, // En production, désactive `synchronize` pour éviter des modifications inattendues
+  synchronize: true, // En production, désactive `synchronize` pour éviter des modifications inattendues
   logging: false,
   extra: {
     ssl: isProduction ? { rejectUnauthorized: false } : false,

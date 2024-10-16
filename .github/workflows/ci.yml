@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - staging
   pull_request:
     branches:
       - main
+      - staging
 
 jobs:
   lint:
@@ -17,7 +19,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '18'
-      - run: yarn install
+      - run: yarn
       - run: yarn lint
 
   test:
@@ -28,16 +30,39 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '18'
-      - run: yarn install
+      - run: yarn
       - run: yarn test
 
   build:
     runs-on: ubuntu-latest
+    needs:
+      - lint
+      - test
     steps:
       - uses: actions/checkout@v2
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '18'
-      - run: yarn install
+      - run: yarn
       - run: yarn build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to Render
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            SERVICE_ID=srv-cs38tgu8ii6s738ilpj0
+            API_KEY=${{ secrets.REN_API_KEY_PROD }}
+          elif [ "${{ github.ref }}" == "refs/heads/staging" ]; then
+            SERVICE_ID=srv-cs81f3jqf0us738iq010
+            API_KEY=${{ secrets.RENDER_API_KEY_STAGING }}
+          fi
+
+          curl -X POST \
+            -H "Authorization: Bearer $API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{}' \
+            https://api.render.com/v1/services/$SERVICE_ID/deploys
